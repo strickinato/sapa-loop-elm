@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="Toby Silverman and Aaron Strick headed out to Vietname with their motorcycles. Here's the result" />
+    <meta name="author" content="Aaron Strick" />
+
+    <link rel="stylesheet" type="text/css" href="/src/stylesheets/main.css">
+    <script type="text/javascript" src="dist/js/elm.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      app = Elm.fullscreen(Elm.SapaLoopAPI, {incrementScroll: "NONE"});
+      window.scrollTo(0, 1)
+
+      var didScroll = false
+
+      scrollHandler = function(e) {
+        if (didScroll != true) {
+          didScroll = true
+          if (window.scrollY > 1) {
+            app.ports.incrementScroll.send("DOWN")
+          } else {
+            app.ports.incrementScroll.send("UP")
+          }
+        }
+      };
+      window.onscroll = scrollHandler
+
+      setInterval(function() {
+        if(didScroll) {
+            didScroll = false;
+            }
+        }, 1);
+
+      app.ports.requestScrollReset.subscribe(function(_){
+        window.scrollTo(0, 1)
+      });
+
+    </script>
+  </body>
+</html>
